@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+  :root{
+    --color-dark: #29363d;
+    --color-white: #CEF7ED;
+    --color-primary_red: #F85067;
+    --color-primary_green: #366336;
+    --color-primary_yellow: #FACA4E;
+    --font-primary: 'Exo 2', system-ui, sans-serif;
+    --font-size: 16px;
+  }
+}
+
+:root {
+  font-family: var(--font-primary);
+  color-scheme: light dark;
+  color: var(--color-white);
+  background-color: var(--color-dark);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  @apply p-0 m-0 mx-auto max-h-screen
+}
+
+svg{
+  width: 100%;
+  color:var(--color-primary_yellow);
+  transition: all .3s ease;
+}
+
+.w-7xl{
+  width: 1024px;
+  margin-inline: auto;
+}
+
+.Link {
+  position: relative;
+  font-weight: 500;
+  color: var(--color-primary_yellow);
+  text-decoration: inherit;
+  transition: all .3s ease;
+}
+.Link::after{
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 10%;
+  height: 1px;
+  background-color: var(--color-primary_yellow);
+  transition: all .3s ease;
+}
+.Link:hover::after{
+  width: 100%;
+  background-color: var(--color-white);
+}
+.Link:hover {
+  cursor: pointer;
+  color: var(--color-white);
+}
+
+.menu-mobile{
+  @apply w-full fixed bottom-0 shadow bg-primary_green;
+}
+
+.menu-mobile ul{
+  @apply grid grid-cols-3 place-content-center
+}
+
+.menu-mobile ul li a{
+  @apply grid justify-center w-full h-full
+}
+
+.menu-mobile li:has(.active),
+.menu-mobile li:hover{
+  @apply bg-dark;
+}
+
+
+.menu-mobile li .active,
+.menu-mobile li:hover a{
+  transform: translateY(-50%);
+  box-shadow: 0px -4px 5px var(--color-primary_green);
+  border-radius: 9999px;
+}
+
+.menu-mobile li .active svg,
+.menu-mobile li:hover a svg{
+  transform: scale(2);
+}
+
