@@ -1,0 +1,58 @@
+.navbar-bottom-container{
+  @apply 
+      fixed 
+      bottom-[2%]
+      left-1/2
+      -translate-x-1/2
+      w-11/12
+      p-5;
+      border-radius: 1.2rem;
+}
+.navbar-bottom-tabs{
+  @apply
+    flex
+    h-full
+    ;
+  box-shadow: 0px 5px 10px 0px rgba(23, 23, 23, 0.28);
+}
+.navbar-tab{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @apply
+    bg-dark
+    border-t-2
+    border-t-dark
+}
+
+.navbar-tab-left{
+  border-top-right-radius: 30px;
+  border-top: 1px solid rgba(167, 161, 161, 0.69);
+  @apply
+    w-full
+}
+
+.navbar-tab-center{
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+  border-bottom: 1px solid rgba(167, 161, 161, 0.69);
+  @apply 
+    w-9/12
+    flex
+    justify-center;
+}
+
+.fab{
+  @apply
+    bg-accentPrimary
+    rounded-full
+    -translate-y-1/3
+    w-8/12
+}
+
+.navbar-tab-right{
+  border-top-left-radius: 30px;
+  border-top: 1px solid rgba(167, 161, 161, 0.69);
+  @apply 
+    w-full
+}

@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base{
   :root{
     --color-dark: #29363d;
-    --color-white: #CEF7ED;
+    --color-white: #cff7ed;
+    --color-white-light: #e6fbf5;
     --color-primary_red: #F85067;
     --color-primary_green: #366336;
     --color-primary_yellow: #FACA4E;
@@ -41,6 +43,11 @@ svg{
   margin-inline: auto;
 }
 
+.Page-Title {
+  @apply text-3xl my-5 text-center underline underline-offset-4
+}
+
+
 .Link {
   position: relative;
   font-weight: 500;
@@ -75,25 +82,24 @@ svg{
   @apply grid grid-cols-3 place-content-center
 }
 
+.menu-mobile ul li:has(.active),
+.menu-mobile ul li:hover{
+  background-color: #29363d
+}
+
 .menu-mobile ul li a{
-  @apply grid justify-center w-full h-full
+  @apply grid justify-center w-full h-full;
 }
-
-.menu-mobile li:has(.active),
-.menu-mobile li:hover{
-  @apply bg-dark;
-}
-
 
 .menu-mobile li .active,
 .menu-mobile li:hover a{
   transform: translateY(-50%);
   box-shadow: 0px -4px 5px var(--color-primary_green);
   border-radius: 9999px;
+  @apply bg-dark;
 }
 
 .menu-mobile li .active svg,
 .menu-mobile li:hover a svg{
   transform: scale(2);
 }
-
