@@ -5,8 +5,8 @@
       left-1/2
       -translate-x-1/2
       w-11/12
-      p-5;
-      border-radius: 1.2rem;
+      p-2;
+      border-radius: 1rem;
 }
 .navbar-bottom-tabs{
   @apply

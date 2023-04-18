@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ReactSVG } from 'react-svg'
 import { NavLink } from 'react-router-dom'
 import './Navbar.css'
+import { set } from 'react-hook-form'
 
 import userIcon from '../../../assets/icons/userIcon.svg'
 import navIcon from '../../../assets/icons/NavIcon.svg'
@@ -14,7 +15,12 @@ import plusIcon from '../../../assets/icons/plusIcon.svg'
 
 
 export default function Navbar() {
-  
+  const [addExercise, setAddExercise] = useState(false)
+
+  const clickAdd = (e) => {
+    e.preventDefault()
+    setAddExercise(!addExercise)
+  }
   return (
     <>
       <div className="w-full shadow-lg">
@@ -34,13 +40,15 @@ export default function Navbar() {
 
 
       {/* MOBILE MENU /W FAB */}
-      <div className="navbar-bottom-container">
+      <div className="navbar-bottom-container md:hidden">
         <div className="navbar-bottom-tabs">
           <div className="navbar-tab navbar-tab-left">
               <ReactSVG className='w-1/4' src={ pieChart } />
           </div>
           <div className="navbar-tab navbar-tab-center">
-            <ReactSVG className='fab' src={ plusIcon } />
+            <button onClick={clickAdd} className='flex justify-center'>
+            {!addExercise ?  <ReactSVG className='fab' src={ plusIcon } /> :  <ReactSVG className='fab' src={ signalIcon } />}
+            </button>
           </div>
           <div className="navbar-tab navbar-tab-right">
               <ReactSVG className='w-1/4' src={ userIcon } />

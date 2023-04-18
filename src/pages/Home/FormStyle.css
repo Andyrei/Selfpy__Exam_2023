@@ -1,7 +1,7 @@
 .form-container{
   @apply w-3/5 mx-auto;
 }
-.form-container div{
+.form-container .input-wrapper{
   margin: 2rem 0;
 }
 .input-container {
@@ -9,7 +9,7 @@
 }
 
 .input-container  input{
-  @apply py-3 w-full;
+  @apply p-3 w-full;
 }
 
 .input-container .input-label{
