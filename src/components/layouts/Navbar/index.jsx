@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { UserContext } from '../../../context/userContext'
+
 import { ReactSVG } from 'react-svg'
 import { NavLink } from 'react-router-dom'
 import './Navbar.css'
@@ -16,6 +18,7 @@ import plusIcon from '../../../assets/icons/plusIcon.svg'
 
 export default function Navbar() {
   const [addExercise, setAddExercise] = useState(false)
+  const user = useContext(UserContext)
 
   const clickAdd = (e) => {
     e.preventDefault()
@@ -31,6 +34,7 @@ export default function Navbar() {
             </a>
           </div>
           <div className="navbar-center">
+            {user.name}
           </div>
           <div className="navbar-end">
               <ReactSVG className="btn btn-ghost btn-circle" tabIndex={0} src={ userIcon } />
@@ -38,24 +42,24 @@ export default function Navbar() {
         </div>
       </div>
 
-
-      {/* MOBILE MENU /W FAB */}
-      <div className="navbar-bottom-container md:hidden">
-        <div className="navbar-bottom-tabs">
-          <div className="navbar-tab navbar-tab-left">
-              <ReactSVG className='w-1/4' src={ pieChart } />
-          </div>
-          <div className="navbar-tab navbar-tab-center">
-            <button onClick={clickAdd} className='flex justify-center'>
-            {!addExercise ?  <ReactSVG className='fab' src={ plusIcon } /> :  <ReactSVG className='fab' src={ signalIcon } />}
-            </button>
-          </div>
-          <div className="navbar-tab navbar-tab-right">
-              <ReactSVG className='w-1/4' src={ userIcon } />
+      {/* MOBILE MENU /W FAB ONLY ON AUTH */}
+      {user.token&&
+        <div className="navbar-bottom-container md:hidden">
+          <div className="navbar-bottom-tabs">
+            <div className="navbar-tab navbar-tab-left">
+                <ReactSVG className='w-1/4' src={ pieChart } />
+            </div>
+            <div className="navbar-tab navbar-tab-center">
+              <button onClick={clickAdd} className='flex justify-center'>
+              {!addExercise ?  <ReactSVG className='fab' src={ plusIcon } /> :  <ReactSVG className='fab' src={ signalIcon } />}
+              </button>
+            </div>
+            <div className="navbar-tab navbar-tab-right">
+                <ReactSVG className='w-1/4' src={ userIcon } />
+            </div>
           </div>
         </div>
-      </div>
-
+      }
     </>
   )
 }
