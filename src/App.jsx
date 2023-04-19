@@ -6,29 +6,36 @@ import Routing from './components/utils/Routing';
 import { UserContext } from './components/context/userContext'
 import { useEffect, useState } from 'react';
 
+const FETCH_URL = 'https://selfpy-a80cb-default-rtdb.europe-west1.firebasedatabase.app';
+
 function App() {
   const initialVurrentUserValue = {
     id:'',username: '',name: '',surname: '',birth: '',token: '',}
+  const [curentUser, setCurentUser] = useState(initialVurrentUserValue);
+  const [users, setUsers] = useState([]);
 
-  const [user, setUser] = useState(initialVurrentUserValue);
 
- /*    useEffect(() => {
-      setUser({
-          id: '1',
-          username: 'nd.d',
-          name: 'Andy',
-          surname: 'Drei',
-          birth: '01/01/1970',
-          token: '812b82h3h9b123nj123nmxz@#!2nmsk'
-      })  
-    }, [user]) */
-
+  
+const registerUser = (user)=>{
+  fetch(`${FETCH_URL}/users.json`, {
+    method: 'post',
+    headers: {
+      'content-type':'application/json'
+    },
+    body: JSON.stringify(user)
+  })
+  .then(res => res.json())
+  .then(data => {
+    setUsers((prevUsers)=>[...prevUsers, {...user, id: data?.name}])
+  })
+  .catch(err => console.log(err))
+}
   return (
     <>
-      <UserContext.Provider value={user}>
+      <UserContext.Provider value={curentUser}>
         <Navbar />
         <main className='w-full h-screen flex justify-center'>
-          <Routing user={user} setUser={setUser} />
+          <Routing curentUser={curentUser} setCurentUser={setCurentUser} registerUser={registerUser}/>
         </main>
       </UserContext.Provider>
     </>

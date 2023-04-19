@@ -4,13 +4,13 @@ import { Route, Routes } from "react-router-dom";
 import pages from '../../pages';
 
 
-export default function Routing({user, setUser}) {
+export default function Routing({curentUser, setCurentUser, registerUser}) {
 
-/*   https://selfpy-a80cb-default-rtdb.europe-west1.firebasedatabase.app/users */
+
   return (
     <Routes>
       <Route exact path="/login" element={<pages.Login />} />
-      <Route exact path="/register" element={<pages.Register user={user} setUser={setUser}/>} />
+      <Route exact path="/register" element={<pages.Register curentUser={curentUser} setCurentUser={setCurentUser} registerUser={registerUser}/>} />
 
         <Route path="/" element={<pages.Dashboard />} />
         <Route path="exercises" >

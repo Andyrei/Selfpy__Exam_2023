@@ -5,13 +5,8 @@ import { useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools';
 import { NavLink } from 'react-router-dom';
 
-export default function Register({user, setUser}) {
-  const {register, handleSubmit, control, watch, formState: {errors, touchedFields} } = useForm(
-    {
-      mode: 'onblur',
-      default: user,
-    }
-  );
+export default function Register({registerUser, curentUser, setCurentUser}) {
+  const {register, handleSubmit, fieldValues, control, watch, formState: {errors, touchedFields} } = useForm();
   const emailPattern = 
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -19,7 +14,10 @@ export default function Register({user, setUser}) {
         watchMail = watch('mail', false)
 
   const onSubmit = (data) =>{
-    console.log(data)
+    console.log(data);
+
+    /* WORKING FETCH */
+    /* registerUser(data) */
   }
 
   return (
@@ -76,9 +74,13 @@ export default function Register({user, setUser}) {
               ...register('mail',
                 {required: {
                   value: true,
-                  message: 'mail is required',
-                  pattern: emailPattern
-                }})} />
+                  message: 'Mail is required',
+                },
+                  pattern: {
+                    value: emailPattern,
+                    message: 'Mail is invalid'
+                  }
+                })} />
             <label className='input-label'> mail </label>
           </div>
           {errors.mail && <span className='error-text'>{errors.mail?.message}</span> }
@@ -86,14 +88,20 @@ export default function Register({user, setUser}) {
 
         {/* Confirm mail */}
         {touchedFields.mail && watchMail &&
-        <div className="input-wrapper">        
+        <div className="input-wrapper">
+          {console.log(errors.confirmMail)}        
           <div className={errors.confirmMail ? 'input-container invalid' : 'input-container'}>
             <input placeholder=' ' {
               ...register('confirmMail',
                 {required: {
                   value: true,
                   message: 'confirmMail is required'
-                }})} />
+                },
+                pattern: {
+                  value: emailPattern,
+                  message: 'Mail is invalid'
+                }
+                })} />
             <label className='input-label'> confirm Mail </label>
           </div>
           {errors.confirmMail && <span className='error-text'>{errors.confirmMail?.message}</span> }
