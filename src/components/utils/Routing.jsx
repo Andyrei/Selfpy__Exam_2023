@@ -6,7 +6,7 @@ import pages from '../../pages';
 
 export default function Routing() {
   const user = useContext(UserContext)
-
+  https://selfpy-a80cb-default-rtdb.europe-west1.firebasedatabase.app/users
   return (
     <Routes>
       <Route exact path="/login">
