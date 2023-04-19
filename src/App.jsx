@@ -1,8 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import AbcSchemas from './pages/Exercises/pages/AbcSchema'
+
 import Navbar from './components/layouts/Navbar'
 import Routing from './components/utils/Routing';
-import { UserContext } from './context/userContext'
+import { UserContext } from './components/context/userContext'
 import { useEffect, useState } from 'react';
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
 
   const [user, setUser] = useState(initialVurrentUserValue);
 
-    useEffect(() => {
+ /*    useEffect(() => {
       setUser({
           id: '1',
           username: 'nd.d',
@@ -20,13 +21,15 @@ function App() {
           birth: '01/01/1970',
           token: '812b82h3h9b123nj123nmxz@#!2nmsk'
       })  
-    })
+    }, [user]) */
 
   return (
     <>
       <UserContext.Provider value={user}>
         <Navbar />
-        <Routing />
+        <main className='w-full h-screen flex justify-center'>
+          <Routing user={user} setUser={setUser} />
+        </main>
       </UserContext.Provider>
     </>
   )

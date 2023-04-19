@@ -1,19 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { UserContext } from '../../../context/userContext'
+import { UserContext } from '../../context/userContext'
 
+import './Navbar.css'
 import { ReactSVG } from 'react-svg'
 import { NavLink } from 'react-router-dom'
-import './Navbar.css'
 import { set } from 'react-hook-form'
-
-import userIcon from '../../../assets/icons/userIcon.svg'
-import navIcon from '../../../assets/icons/NavIcon.svg'
-import logoEy from '../../../assets/icons/logo_EY_yellow.svg'
-import dashIcon from '../../../assets/icons/dashboard.svg'
-import infoIcon from '../../../assets/icons/infoIcon.svg'
-import signalIcon from '../../../assets/icons/signalIcon.svg'
-import pieChart from '../../../assets/icons/pieChart.svg'
-import plusIcon from '../../../assets/icons/plusIcon.svg'
+import icons from '../../../assets/icons/Icons'
 
 
 export default function Navbar() {
@@ -30,14 +22,14 @@ export default function Navbar() {
         <div className=" navbar p-5">
           <div className="navbar-start">
             <a href="/">
-              <ReactSVG className='w-20' src={ logoEy } />
+              <ReactSVG className='w-20' src={ icons.logoEy } />
             </a>
           </div>
           <div className="navbar-center">
             {user.name}
           </div>
           <div className="navbar-end">
-              <ReactSVG className="btn btn-ghost btn-circle" tabIndex={0} src={ userIcon } />
+              <ReactSVG className="btn btn-ghost btn-circle" tabIndex={0} src={ icons.userIcon } />
           </div>
         </div>
       </div>
@@ -47,15 +39,15 @@ export default function Navbar() {
         <div className="navbar-bottom-container md:hidden">
           <div className="navbar-bottom-tabs">
             <div className="navbar-tab navbar-tab-left">
-                <ReactSVG className='w-1/4' src={ pieChart } />
+                <ReactSVG className='w-1/4' src={ icons.pieChart } />
             </div>
             <div className="navbar-tab navbar-tab-center">
               <button onClick={clickAdd} className='flex justify-center'>
-              {!addExercise ?  <ReactSVG className='fab' src={ plusIcon } /> :  <ReactSVG className='fab' src={ signalIcon } />}
+              {!addExercise ?  <ReactSVG className='fab' src={ icons.plusIcon } /> :  <ReactSVG className='fab' src={ icons.signalIcon } />}
               </button>
             </div>
             <div className="navbar-tab navbar-tab-right">
-                <ReactSVG className='w-1/4' src={ userIcon } />
+                <ReactSVG className='w-1/4' src={ icons.userIcon } />
             </div>
           </div>
         </div>

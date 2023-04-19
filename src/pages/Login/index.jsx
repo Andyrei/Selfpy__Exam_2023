@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import './FormStyle.css'
 import { useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools';
+import { NavLink } from 'react-router-dom';
 
-export default function Home() {
-  const {register, handleSubmit, control, watch, formState: {errors} } = useForm();
+export default function Login() {
+  
+  const {register, handleSubmit, control, formState: {errors} } = useForm();
   
   const initialVurrentUserValue = {id: '', username: '', password:''};
   const {user, setUser} = useState(initialVurrentUserValue);
@@ -16,7 +18,7 @@ export default function Home() {
   return (
     <div className='form-container'>
       <h1 className='Page-Title'>Log In</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
         <div className="input-wrapper">        
           <div className={errors.username ? 'input-container invalid' : 'input-container'}>
             <input placeholder=' ' {
@@ -37,11 +39,13 @@ export default function Home() {
             {errors.password && <span className='error-text'>{errors.password.message}</span>}
         </div>
 
-
           <div className="w-full">
-            <input type="submit" className='btn block mx-auto' value="Register"/>
+            <input type="submit" className='btn block w-full' value="Login"/>
           </div>
       </form>
+      <p>You do not have an account? 
+        <NavLink className="Link" to="/register">Register</NavLink>
+      </p>
       <DevTool control={control}/>
     </div>
   )
