@@ -6,6 +6,7 @@ import { DevTool } from '@hookform/devtools';
 import { NavLink } from 'react-router-dom';
 
 export default function Register({registerUser, curentUser, setCurentUser}) {
+  
   const {register, handleSubmit, fieldValues, control, watch, formState: {errors, touchedFields} } = useForm();
   const emailPattern = 
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -136,7 +137,7 @@ export default function Register({registerUser, curentUser, setCurentUser}) {
       </form>
       <p className='text-center my-3'>
         You already have an account? <br/>
-        <NavLink className="Link link-warning" to='/login'>Log In</NavLink>
+        <NavLink className="Link link-warning" to='/'>Log In</NavLink>
       </p>
       <DevTool control={control}/>
     </div>

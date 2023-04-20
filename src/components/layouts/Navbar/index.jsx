@@ -1,16 +1,13 @@
-import React, { useContext, useState } from 'react'
-import { UserContext } from '../../context/userContext'
+import React, { useState } from 'react'
+import icons from '../../../assets/icons/Icons'
 
 import './Navbar.css'
 import { ReactSVG } from 'react-svg'
 import { NavLink } from 'react-router-dom'
-import { set } from 'react-hook-form'
-import icons from '../../../assets/icons/Icons'
 
 
 export default function Navbar() {
   const [addExercise, setAddExercise] = useState(false)
-  const user = useContext(UserContext)
 
   const clickAdd = (e) => {
     e.preventDefault()
@@ -26,7 +23,6 @@ export default function Navbar() {
             </a>
           </div>
           <div className="navbar-center">
-            {user.name}
           </div>
           <div className="navbar-end">
               <ReactSVG className="btn btn-ghost btn-circle" tabIndex={0} src={ icons.userIcon } />
@@ -35,7 +31,7 @@ export default function Navbar() {
       </div>
 
       {/* MOBILE MENU /W FAB ONLY ON AUTH */}
-      {user.token&&
+
         <div className="navbar-bottom-container md:hidden">
           <div className="navbar-bottom-tabs">
             <div className="navbar-tab navbar-tab-left">
@@ -51,7 +47,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-      }
+
     </>
   )
 }
