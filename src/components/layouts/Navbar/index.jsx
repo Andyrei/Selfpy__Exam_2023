@@ -32,7 +32,7 @@ export default function Navbar() {
 
       {/* MOBILE MENU /W FAB ONLY ON AUTH */}
 
-        <div className="navbar-bottom-container md:hidden">
+{/*         <div className="navbar-bottom-container md:hidden">
           <div className="navbar-bottom-tabs">
             <div className="navbar-tab navbar-tab-left">
                 <ReactSVG className='w-1/4' src={ icons.pieChart } />
@@ -46,7 +46,7 @@ export default function Navbar() {
                 <ReactSVG className='w-1/4' src={ icons.userIcon } />
             </div>
           </div>
-        </div>
+        </div> */}
 
     </>
   )

@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import pages from '../../pages';
 
 
-export default function Routing({curentUser, setCurentUser, registerUser}) {
+export default function Routing() {
 
   return (
     <Routes>

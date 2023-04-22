@@ -1,34 +1,31 @@
-import React, { useState } from 'react'
-
+import React from 'react'
 import './FormStyle.css'
+import axios from '../../api/axios';
+
 import { useForm } from 'react-hook-form'
+import useAuthContext from '../../context/AuthContext';
+import { NavLink } from 'react-router-dom';
+
 import { DevTool } from '@hookform/devtools';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../components/context/authContext';
+
 
 export default function Login() {
-  
   const {register, handleSubmit, control, formState: {errors} } = useForm();
-  
-  const {setUser} = useAuth();
-  const navigate = useNavigate();
+  const { setAsLogged } = useAuthContext()
+  const LOGIN_API= import.meta.env.VITE_LOGIN_API;
 
-
-  const onSubmit = (dataForm) =>{
-    fetch('https://selfpy-a80cb-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
+  const onSubmit = async (dataForm) =>{
+    await axios.post(LOGIN_API, dataForm)
+    .then((data)=>{
+      if (data.status !== 'error'){
+        setAsLogged(data.user, data['access_token'])
+      }else{
+        //
       }
-    })
-    .then(res => res.json())
-    .then(
-      (data)=>{
-        setUser = dataForm
-      }
-    )
-    .catch(err => console.log(err))
 
+      navigate('/profile');
+      console.log('You have been logged');
+    });
   }
 
   return (
@@ -36,23 +33,23 @@ export default function Login() {
       <h1 className='Page-Title'>Log In</h1>
       <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
         <div className="input-wrapper">        
-          <div className={errors.username ? 'input-container invalid' : 'input-container'}>
+          <div className={errors? 'input-container invalid' : 'input-container'}>
             <input placeholder=' ' {
-              ...register('username',
+              ...register('email',
                 {required: {
                   value: true,
-                  message: 'Username is required'
+                  message: 'email is required'
                 }})} />
-            <label className='input-label'> username </label>
+            <label className='input-label'> Email </label>
           </div>
-          {errors.username && <span className='error-text'>{errors.username?.message}</span> }
+          {errors && <span className='error-text'>{errors?.message}</span> }
         </div>
         <div className="input-wrapper">
-          <div className={errors.password? 'invalid input-container' : 'input-container'}>
+          <div className={errors? 'invalid input-container' : 'input-container'}>
             <input placeholder=' ' {...register('password', {required:{value: true, message: 'Password is required'}})} />
             <label className='input-label'> password </label>
           </div>
-            {errors.password && <span className='error-text'>{errors.password.message}</span>}
+            {errors && <span className='error-text'>{errors.message}</span>}
         </div>
 
           <div className="w-full">
