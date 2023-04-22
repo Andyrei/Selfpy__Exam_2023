@@ -5,20 +5,27 @@ import { useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools';
 import { NavLink } from 'react-router-dom';
 
-export default function Register({registerUser, curentUser, setCurentUser}) {
+export default function Register() {
   
   const {register, handleSubmit, fieldValues, control, watch, formState: {errors, touchedFields} } = useForm();
-  const emailPattern = 
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const watchPassword = watch('password', false),
-        watchMail = watch('mail', false)
+  const onSubmit = (dataForm) =>{
+    console.log(dataForm);
+    fetch('http://localhost:8000/api/auth/register',{
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+				Accept: "application/json",
+      },
+      body: JSON.stringify(dataForm),
 
-  const onSubmit = (data) =>{
-    console.log(data);
-
-    /* WORKING FETCH */
-    /* registerUser(data) */
+    })
+    .then((res)=> res.json())
+    .then((data) => {
+      if(!data.errors){
+        
+      }
+    })
   }
 
   return (
@@ -88,7 +95,7 @@ export default function Register({registerUser, curentUser, setCurentUser}) {
         </div>
 
         {/* Confirm mail */}
-        {touchedFields.mail && watchMail &&
+{/*         {touchedFields.mail && watchMail &&
         <div className="input-wrapper">
           {console.log(errors.confirmMail)}        
           <div className={errors.confirmMail ? 'input-container invalid' : 'input-container'}>
@@ -107,7 +114,7 @@ export default function Register({registerUser, curentUser, setCurentUser}) {
           </div>
           {errors.confirmMail && <span className='error-text'>{errors.confirmMail?.message}</span> }
         </div>
-        }
+        } */}
 
         {/* Password */}
         <div className="input-wrapper">
@@ -119,14 +126,14 @@ export default function Register({registerUser, curentUser, setCurentUser}) {
         </div>
         
         {/* repeat Password */}
-        {touchedFields.password && watchPassword &&
+{/*         {touchedFields.password && watchPassword &&
         <div className="input-wrapper">
           <div className={errors.repeatPassword? 'invalid input-container' : 'input-container'}>
             <input placeholder=' ' {...register('repeatPassword', {required:{value: true, message: 'Password is required'}})} />
             <label className='input-label'> repeat password </label>
           </div>
             {errors.repeatPassword && <span className='error-text'>{errors.repeatPassword.message}</span>}
-        </div>}
+        </div>} */}
 
 
 

@@ -6,7 +6,7 @@ import { ReactSVG } from 'react-svg'
 import { NavLink } from 'react-router-dom'
 
 
-export default function Navbar() {
+export default function Navbar({userData, setLogout}) {
   const [addExercise, setAddExercise] = useState(false)
 
   const clickAdd = (e) => {
@@ -25,7 +25,11 @@ export default function Navbar() {
           <div className="navbar-center">
           </div>
           <div className="navbar-end">
-              <ReactSVG className="btn btn-ghost btn-circle" tabIndex={0} src={ icons.userIcon } />
+              {/* <ReactSVG className="btn btn-ghost btn-circle" tabIndex={0} src={ icons.userIcon } /> */}
+              {
+                userData.token && 
+                <button onClick={setLogout} className="text-sm  text-blue-600 hover:underline">Logout</button>
+						  }
           </div>
         </div>
       </div>

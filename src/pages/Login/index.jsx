@@ -1,6 +1,5 @@
 import React from 'react'
 import './FormStyle.css'
-import axios from '../../api/axios';
 
 import { useForm } from 'react-hook-form'
 import useAuthContext from '../../context/AuthContext';
@@ -10,46 +9,39 @@ import { DevTool } from '@hookform/devtools';
 
 
 export default function Login() {
-  const {register, handleSubmit, control, formState: {errors} } = useForm();
-  const { setAsLogged } = useAuthContext()
-  const LOGIN_API= import.meta.env.VITE_LOGIN_API;
+  const {control, register, handleSubmit, setError, formState: { errors } } = useForm();
 
-  const onSubmit = async (dataForm) =>{
-    await axios.post(LOGIN_API, dataForm)
-    .then((data)=>{
-      if (data.status !== 'error'){
-        setAsLogged(data.user, data['access_token'])
-      }else{
-        //
-      }
+  const { login, emailPattern } = useAuthContext()
 
-      navigate('/profile');
-      console.log('You have been logged');
-    });
+  const onSubmit = (dataForm) =>{
+    login(setError, dataForm)
   }
-
   return (
     <div className='form-container'>
       <h1 className='Page-Title'>Log In</h1>
       <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
         <div className="input-wrapper">        
-          <div className={errors? 'input-container invalid' : 'input-container'}>
+          <div className={`input-container ${errors.email && 'invalid'}`}>
             <input placeholder=' ' {
               ...register('email',
                 {required: {
                   value: true,
-                  message: 'email is required'
-                }})} />
+                  message: 'Email is required'
+                },pattern: {
+                  value: emailPattern,
+                  message: 'Mail is not valid'
+                }
+                })} />
             <label className='input-label'> Email </label>
           </div>
-          {errors && <span className='error-text'>{errors?.message}</span> }
+          {errors.email && <span className='error-text'>{errors.email.message}</span> }
         </div>
         <div className="input-wrapper">
-          <div className={errors? 'invalid input-container' : 'input-container'}>
+          <div className={`input-container ${errors.password && "invalid"}`}>
             <input placeholder=' ' {...register('password', {required:{value: true, message: 'Password is required'}})} />
             <label className='input-label'> password </label>
           </div>
-            {errors && <span className='error-text'>{errors.message}</span>}
+            {errors.password && <span className='error-text'>{errors.password.message}</span>}
         </div>
 
           <div className="w-full">
