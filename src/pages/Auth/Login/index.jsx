@@ -2,7 +2,7 @@ import React from 'react'
 import './FormStyle.css'
 
 import { useForm } from 'react-hook-form'
-import useAuthContext from '../../context/AuthContext';
+import useAuthContext from '../../../context/AuthContext';
 import { NavLink } from 'react-router-dom';
 
 import { DevTool } from '@hookform/devtools';

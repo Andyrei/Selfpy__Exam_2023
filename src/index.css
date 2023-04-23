@@ -32,6 +32,13 @@ body {
   @apply p-0 m-0 mx-auto max-h-screen
 }
 
+.main-container{
+  height: 100vh;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  @apply w-full
+}
+
 svg{
   width: 100%;
   color:var(--color-primary_yellow);
@@ -65,10 +72,11 @@ svg{
   background-color: var(--color-primary_yellow);
   transition: all .3s ease;
 }
+.Link.active::after,
 .Link:hover::after{
-  width: 100%;
-  background-color: var(--color-white);
+  @apply w-full bg-white
 }
+.link.active,
 .Link:hover {
   cursor: pointer;
   color: var(--color-white);
@@ -102,4 +110,7 @@ svg{
 .menu-mobile li .active svg,
 .menu-mobile li:hover a svg{
   transform: scale(2);
+}
+.navbar-tab ul .active{
+  @apply bg-dark-darker
 }

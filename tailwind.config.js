@@ -13,7 +13,10 @@ export default {
       }
     },
     colors: {
-      'dark': '#29363d',
+      'dark': {
+        DEFAULT: '#29363d',
+        darker: '#1b2328',
+      },
       'white': {
         light: '#e6fbf5',
         DEFAULT: '#CEF7ED',
@@ -23,6 +26,15 @@ export default {
       'primary_green': '#366336',
       'primary_yellow': '#FACA4E',
     },
+  },
+  daisyui: {
+    themes: [{
+      dark: {
+        ...require("daisyui/src/colors/themes")["[data-theme=dark]"],
+        primary: '#F85067',
+        secondary: '#FACA4E'
+      }
+    }],
   },
   plugins: [require("daisyui")],
 }

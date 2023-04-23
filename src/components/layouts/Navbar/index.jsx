@@ -7,12 +7,7 @@ import { NavLink } from 'react-router-dom'
 
 
 export default function Navbar({userData, setLogout}) {
-  const [addExercise, setAddExercise] = useState(false)
 
-  const clickAdd = (e) => {
-    e.preventDefault()
-    setAddExercise(!addExercise)
-  }
   return (
     <>
       <div className="w-full shadow-lg">
@@ -33,25 +28,6 @@ export default function Navbar({userData, setLogout}) {
           </div>
         </div>
       </div>
-
-      {/* MOBILE MENU /W FAB ONLY ON AUTH */}
-
-{/*         <div className="navbar-bottom-container md:hidden">
-          <div className="navbar-bottom-tabs">
-            <div className="navbar-tab navbar-tab-left">
-                <ReactSVG className='w-1/4' src={ icons.pieChart } />
-            </div>
-            <div className="navbar-tab navbar-tab-center">
-              <button onClick={clickAdd} className='flex justify-center'>
-              {!addExercise ?  <ReactSVG className='fab' src={ icons.plusIcon } /> :  <ReactSVG className='fab' src={ icons.signalIcon } />}
-              </button>
-            </div>
-            <div className="navbar-tab navbar-tab-right">
-                <ReactSVG className='w-1/4' src={ icons.userIcon } />
-            </div>
-          </div>
-        </div> */}
-
     </>
   )
 }

@@ -4,7 +4,11 @@ import { useCookies } from "react-cookie";
 
 /* API's */
 const USER_API= import.meta.env.VITE_USER_API;
+const REGISTER_API= import.meta.env.VITE_REGISTER_API;
+const LOGIN_API= import.meta.env.VITE_LOGIN_API;
 const BASE_URL= import.meta.env.VITE_BASE_URL;
+
+const emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 // CREATE CONTEXT
 const AuthContext = createContext({})
@@ -37,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 			httpOnly: false,
 		});
 		setUserData({ token: token, user });
-		navigate("/profile");
+		navigate("/");
 	};
 
 
@@ -49,14 +53,14 @@ export const AuthProvider = ({ children }) => {
 			httpOnly: false,
 		});
 		setUserData({ token: "", user: null });
-		navigate("/");
+		navigate("/login");
 	};
 // END COOKIE
 
 // GET USER
 const getUserToken = async() => {
   if (cookies["auth_token"]) {
-    fetcher(`/user`, {
+    fetcher(USER_API, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${cookies["auth_token"]}`,
@@ -65,14 +69,15 @@ const getUserToken = async() => {
       .then((response) => response.json())
       .then((data) => {
         setUserData({ token: cookies["auth_token"], user: data });
-        navigate("/profile");
       })
       .catch((error) => {
         console.log(error);
         setUserData({ token: "", user: null });
         setLogout();
       });
-  } else {
+  } 
+  
+  else {
     setUserData({ token: "", user: null });
     if(location.pathname === '/register') {
       return;
@@ -81,36 +86,50 @@ const getUserToken = async() => {
   }
 }
 
-function updateOptions(options) {
-		const update = {
-			...options,
-			headers: { ...options.headers, Accept: "application/json" },
-		};
-		if (userData.token) {
-			update.headers = {
-				...update.headers,
-				Authorization: `Bearer ${userData.token}`,
-			};
-		}
-		return update;
+// REGISTER USER FUNC
+const registerUser = (setError, dataForm)=>{
+  const getErrorTypes = (errors) => {
+		const types = {};
+		errors.forEach((error, i) => {
+			types[`errorsFromApi${i + 1}`] = error
+		})
+		return types;
 	}
 
-	const fetcher = (apiEndPoint, options) => {
-		return fetch(`${BASE_URL}${apiEndPoint}`, updateOptions(options));
-	};
+  fetcher(REGISTER_API, {
+  method: "POST",
+  headers: {
+    "Content-type": "application/json",
+  },
+  body: JSON.stringify(dataForm),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if(data.status) {
+        setAsLogged(data.user, data["access_token"])
+      } else {
+        Object.keys(data.errors).forEach(field => {
+          if(data.errors[field]) {
+            setError(field, {
+              types: getErrorTypes(data.errors[field])
+            })	
+          }
+        })
+      }
+  })
+}
 
+// LOGIN USER FUNC
 const login = (setError, dataForm) => {
-  fetcher('/auth/login', {
+  fetcher(LOGIN_API, {
     method: "POST",
     headers: {
-      "Content-type": "application/json",
-      Accept: "application/json",
+      "Content-type": "application/json"
     },
     body: JSON.stringify(dataForm),
   })
   .then((response) => response.json())
   .then((data) => {
-    console.log(data.message)
     if(data.status) {
       setAsLogged(data.user, data["access_token"])
     }else{
@@ -123,15 +142,33 @@ const login = (setError, dataForm) => {
   
 }
 
-const emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const fetcher = (apiEndPoint, options) => {
+  return fetch(`${BASE_URL}${apiEndPoint}`, updateOptions(options));
+};
+
+function updateOptions(options) {
+  const update = {
+    ...options,
+    headers: { ...options.headers, Accept: "application/json" },
+  };
+  if (userData.token) {
+    update.headers = {
+      ...update.headers,
+      Authorization: `Bearer ${userData.token}`,
+    };
+  }
+  return update;
+}
+
+
   return <AuthContext.Provider 
       value = {{
           userData,
-          emailPattern,
-          fetcher,
+          cookies,
           login,
-          setAsLogged,
+          registerUser,
           setLogout,
+          emailPattern,
           getUserToken,
         }}>
 

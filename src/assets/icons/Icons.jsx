@@ -1,19 +1,25 @@
-import userIcon from './userIcon.svg'
-import navIcon from './NavIcon.svg'
+import user from './userIcon.svg'
+import nav from './NavIcon.svg'
 import logoEy from './logo_EY_yellow.svg'
-import dashIcon from './dashboard.svg'
-import infoIcon from './infoIcon.svg'
-import signalIcon from './signalIcon.svg'
+import dash from './dashboard.svg'
+import info from './infoIcon.svg'
+import signal from './signalIcon.svg'
 import pieChart from './pieChart.svg'
-import plusIcon from './plusIcon.svg'
+import plus from './plusIcon.svg'
+import minus from './minusIcon.svg'
+import menu from './menuIcon.svg'
+import close from './closeIcon.svg'
 
 export default {
-    userIcon,
-    navIcon,
+    user,
+    nav,
     logoEy,
-    dashIcon,
-    infoIcon,
-    signalIcon,
+    dash,
+    info,
+    signal,
     pieChart,
-    plusIcon,
+    plus,
+    minus,
+    menu,
+    close,
 }
