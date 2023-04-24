@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react'
+import React, {  useEffect } from 'react'
 import { Route, Routes } from "react-router-dom";
 import useAuthContext from './context/AuthContext';
 import pages from './pages';
@@ -29,11 +29,11 @@ function App() {
 
           <Route path="/" element={<PrivateRoute> <pages.Dashboard /> </PrivateRoute>} />
           <Route element={<pages.Exercises />}>
-            <Route index path='abcschema' element={ <pages.AbcSchema /> }/>
-            <Route path='moodtrack' element={<pages.MoodTrack />}/>
-            <Route path='gratefulness' element={<pages.Gratefulness />}/>
+            <Route index path='abcschema' element={<PrivateRoute> <pages.AbcSchema /> </PrivateRoute>}/>
+            <Route path='moodtrack' element={<PrivateRoute><pages.MoodTrack /></PrivateRoute>}/>
+            <Route path='gratefulness' element={<PrivateRoute><pages.Gratefulness /></PrivateRoute>}/>
           </Route>
-          <Route path="/statistics" element={<pages.Statistics />} />
+          <Route path="/statistics" element={<PrivateRoute><pages.Statistics /></PrivateRoute>} />
         </Routes>
         </main>
 

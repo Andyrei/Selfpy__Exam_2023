@@ -1,12 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ReactSVG } from 'react-svg'
 import icons from '../../../assets/icons/Icons'
 import { NavLink } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import useAuthContext from '../../../context/AuthContext'
 
 export default function Footer() {
   const {register, watch} = useForm()
+  const { fetcher, userData } = useAuthContext()
+  const [nav, setNav ]= useState(null)
 
+  useEffect(()=>{
+      fetcher('/exercises',{
+        method: "get",
+        headers: {
+          "content-type":"application/json"
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data) {
+          setNav(data);
+        }
+      })
+      .catch(err => console.log(err))
+    },[userData])
+  
+    
   return (
     <>
       {/* MOBILE MENU /W FAB ONLY ON AUTH */}

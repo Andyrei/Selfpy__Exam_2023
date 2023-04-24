@@ -170,6 +170,7 @@ function updateOptions(options) {
           setLogout,
           emailPattern,
           getUserToken,
+          fetcher,
         }}>
 
       {children}
