@@ -18,8 +18,8 @@ function App() {
   
   return (
     <>
-        <Navbar userData={userData} setLogout={setLogout}/>
-
+{/*         <Navbar userData={userData} setLogout={setLogout}/>
+ */}
         <main className='main-container'>
         <Routes>
           <Route element={<pages.Auth />}>
@@ -27,7 +27,7 @@ function App() {
             <Route path="/register" element={<pages.Register />} />
           </Route>
 
-          <Route path="/" element={<PrivateRoute> <pages.Dashboard /> </PrivateRoute>} />
+          <Route path="/" element={ <pages.Dashboard />} />
           <Route element={<pages.Exercises />}>
             <Route index path='abc_schema' element={<PrivateRoute> <pages.AbcSchema /> </PrivateRoute>}/>
             <Route path='mood_track' element={<PrivateRoute><pages.MoodTrack /></PrivateRoute>}/>
