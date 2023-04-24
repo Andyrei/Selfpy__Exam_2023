@@ -4,29 +4,35 @@ import icons from '../../../assets/icons/Icons'
 import { NavLink } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import useAuthContext from '../../../context/AuthContext'
+import axios from './../../../api/fetcher'
 
 export default function Footer() {
   const {register, watch} = useForm()
-  const { fetcher, userData } = useAuthContext()
-  const [nav, setNav ]= useState(null)
 
+  const [navs, setNavs ]= useState()
+  const [isLoading, setLoading ] = useState(false) /* CHECK ON FETCH IF USER IS LOADED [NOT ACTIVE] */
+
+  const fetchNav = async() => {
+    try {
+      const response = await axios.get('/exercises')
+      const navLinks =response.data
+      if(navLinks) setNavs(navLinks)
+      console.log(navLinks)
+    }catch(err){
+      console.log(err)
+    }
+  }
   useEffect(()=>{
-      fetcher('/exercises',{
-        method: "get",
-        headers: {
-          "content-type":"application/json"
-        }
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data) {
-          setNav(data);
-        }
-      })
-      .catch(err => console.log(err))
-    },[userData])
+    console.log('component mounted')
+    fetchNav()
+  },[])
   
-    
+  
+  navs && navs.map(v=>{
+    return(
+      console.log(JSON.parse(v.data)) // AND GET ITS DATA
+    )
+  })
   return (
     <>
       {/* MOBILE MENU /W FAB ONLY ON AUTH */}
@@ -36,11 +42,15 @@ export default function Footer() {
                 <NavLink className='w-1/4' to='/statistics'><ReactSVG className='' src={ icons.pieChart } /></NavLink>
             </div>
             <div className="navbar-tab navbar-tab-center relative">
+            {navs && (
               <ul className={`absolute -translate-y-[90%] -top-3/4 w-[300px] menu bg-base-200 bg-opacity-70 text-center ${watch('check') ? 'visible': 'hidden'} `}>
-                    <li><NavLink className='Link' to='/moodtrack'>Mood track</NavLink></li>
-                    <li><NavLink className='Link' to='/gratefulness'>Gratefulness</NavLink></li>
-                    <li><NavLink className='Link' to='/abcschema'>ABC Schema</NavLink></li>
+                {navs.map(nav => (
+                    <li key={nav.id}><NavLink className='Link' to={nav.name}>{
+                      nav.data
+                      }</NavLink></li>
+                  ))}
               </ul>
+            )}
               <label className="fab swap swap-rotate">
                 {/* <!-- this hidden checkbox controls the state --> */}
                 <input type="checkbox" {...register('check', {checked: true/false, })}/>

@@ -29,9 +29,9 @@ function App() {
 
           <Route path="/" element={<PrivateRoute> <pages.Dashboard /> </PrivateRoute>} />
           <Route element={<pages.Exercises />}>
-            <Route index path='abcschema' element={<PrivateRoute> <pages.AbcSchema /> </PrivateRoute>}/>
-            <Route path='moodtrack' element={<PrivateRoute><pages.MoodTrack /></PrivateRoute>}/>
-            <Route path='gratefulness' element={<PrivateRoute><pages.Gratefulness /></PrivateRoute>}/>
+            <Route index path='abc_schema' element={<PrivateRoute> <pages.AbcSchema /> </PrivateRoute>}/>
+            <Route path='mood_track' element={<PrivateRoute><pages.MoodTrack /></PrivateRoute>}/>
+            <Route path='greatefullness' element={<PrivateRoute><pages.Greatefullness /></PrivateRoute>}/>
           </Route>
           <Route path="/statistics" element={<PrivateRoute><pages.Statistics /></PrivateRoute>} />
         </Routes>

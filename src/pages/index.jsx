@@ -5,8 +5,8 @@ import Statistics from './Statistics'
 import Dashboard from './Dashboard'
 import Exercises from './Exercises'
 import AbcSchema from './Exercises/pages/AbcSchema'
-import Gratefulness from './Exercises/pages/Gratefulness'
 import MoodTrack from './Exercises/pages/MoodTrack'
+import Greatefullness from './Exercises/pages/Greatefullness'
 
 export default  {
   Auth,
@@ -17,5 +17,5 @@ export default  {
   Dashboard,
   AbcSchema,
   MoodTrack,
-  Gratefulness,
+  Greatefullness
 }
