@@ -5,21 +5,24 @@ import { NavLink } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import useAuthContext from '../../../context/AuthContext'
 import axios from './../../../api/fetcher'
+import useLoading from '../../../hooks/useLoading'
 
 export default function Footer() {
   const {register, watch} = useForm()
 
   const [navs, setNavs ]= useState()
-  const [isLoading, setLoading ] = useState(false) /* CHECK ON FETCH IF USER IS LOADED [NOT ACTIVE] */
+const {setIsLoading, LoadingElement} = useLoading()
 
   const fetchNav = async() => {
+    setIsLoading(true)
     try {
       const response = await axios.get('/exercises')
       const navLinks =response.data
       if(navLinks) setNavs(navLinks)
-      console.log(navLinks)
+      setIsLoading(false)
     }catch(err){
       console.log(err)
+      setIsLoading(false)
     }
   }
   useEffect(()=>{
@@ -29,12 +32,11 @@ export default function Footer() {
   
   
   navs && navs.map(v=>{
-    return(
-      console.log(JSON.parse(v.data)) // AND GET ITS DATA
-    )
+      
   })
   return (
     <>
+    <LoadingElement>
       {/* MOBILE MENU /W FAB ONLY ON AUTH */}
       <div className="navbar-bottom-container md:hidden">
           <div className="navbar-bottom-tabs">
@@ -44,10 +46,16 @@ export default function Footer() {
             <div className="navbar-tab navbar-tab-center relative">
             {navs && (
               <ul className={`absolute -translate-y-[90%] -top-3/4 w-[300px] menu bg-base-200 bg-opacity-70 text-center ${watch('check') ? 'visible': 'hidden'} `}>
+
                 {navs.map(nav => (
-                    <li key={nav.id}><NavLink className='Link' to={nav.name}>{
-                      nav.data
-                      }</NavLink></li>
+                    <li key={nav.id}>
+                      <NavLink className='Link' to={nav.name}>{
+                        JSON.parse(nav.data).map(e=>{
+                          return e.title
+                        })
+                      }
+                      </NavLink>
+                      </li>
                   ))}
               </ul>
             )}
@@ -65,6 +73,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
+      </LoadingElement>
   </>
   )
 }

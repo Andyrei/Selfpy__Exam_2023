@@ -5,11 +5,9 @@ import { useForm } from 'react-hook-form'
 import useAuthContext from '../../../context/AuthContext';
 import { NavLink } from 'react-router-dom';
 
-import { DevTool } from '@hookform/devtools';
-
 
 export default function Login() {
-  const {control, register, handleSubmit, setError, formState: { errors } } = useForm();
+  const {register, handleSubmit, setError, formState: { errors } } = useForm();
 
   const { login, emailPattern } = useAuthContext()
 
@@ -17,7 +15,7 @@ export default function Login() {
     login(setError, dataForm)
   }
   return (
-    <div className='form-container'>
+    <div className='form-container h-full flex flex-col content-center justify-center'>
       <h1 className='Page-Title'>Log In</h1>
       <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
         <div className="input-wrapper">        
@@ -52,7 +50,6 @@ export default function Login() {
         You don't have an account? <br/>
         <NavLink className="Link link-warning" to='/register'>Register</NavLink>
       </p>
-      <DevTool control={control}/>
     </div>
   )
 }

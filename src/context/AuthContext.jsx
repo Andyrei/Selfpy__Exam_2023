@@ -17,7 +17,6 @@ const AuthContext = createContext({})
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [errors, setErrors] = useState();
 
   const [userData, setUserData] = useState({
     token: "",

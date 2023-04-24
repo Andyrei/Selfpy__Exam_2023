@@ -1,47 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import useAuthContext from '../../context/AuthContext';
 import icons from '../../assets/icons/Icons';
 import { ReactSVG } from 'react-svg';
+import Motivational from './components/Motivational';
+import { NavLink } from 'react-router-dom';
 
 
 
 export default function Dashboard() {
 
-const [ motivational, setMotivational ] = useState();
 
 
-async function getapi()
-{
-  const response = await fetch('https://zenquotes.io/api/random/',
-  {
-    method: 'get',
-    'Access-Control-Allow-Origin': '*'
-  });
-  var data = await response.json();
-  setMotivational(data);
-}
+const { userData, setLogout } =useAuthContext();
 
-useEffect(()=>{
-
-  getapi();
-
-},[])
-/* const { userData } =useAuthContext(); */
-const userData ={
-  user:{
-    username: 'pip.pluto',
-    name: "Pippp",
-    surname: "Pluto",
-    mail: "pip@pluto.com",
-    description: "Small description about me"
-  }
-} 
   return (
-    <>
+    <>    
     <div className='py-7 px-6 bg-dark-darker rounded-b-3xl'>
       <div className='w-full flex justify-between'>
         <div className="">{userData?.user?.username}</div>
-        <div className=""><ReactSVG src={icons.dash} /></div>
+        <div className="dropdown dropdown-bottom dropdown-end">
+          <label tabIndex={0} className="btn btn-ghost btn-circle"><ReactSVG src={icons.dash} /></label>
+          <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+            <li>{ userData.token && 
+                <button onClick={setLogout} className="text-sm  text-blue-600 hover:underline">Logout</button>}</li>
+            <li><a href='/modify' className="text-sm  text-blue-600 hover:underline">Modify</a></li>
+          </ul>
+        </div>
       </div>
       <div className="avatar block mb-5">
         <p className='text-white-dark text-center font-semibold mb-5 text-opacity-70'>PROFILE</p>
@@ -54,16 +38,37 @@ const userData ={
         <p className="text-center text-sm text-white-dark text-opacity-60">{userData?.user?.description}</p>
       </div>
     </div>
-    <div className='w-11/12 mx-auto my-5 rounded-3xl overflow-clip relative'>
-      <div className="">
-        <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fG1vdGl2YXRpb25hbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60" className='w-full h-auto' />
-      </div>
-      <div className=' bg-dark-darker w-full h-full bg-opacity-50 absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 grid place-content-center'>
-          {motivational && <div>
-            {motivational.q}
+    
+    <Motivational/>
+
+    <div className="flex px-5 justify-between gap-6 flex-wrap">
+          <div className="relative w-fit mx-auto rounded-3xl overflow-hidden">
+            <div className='w-full h-1/3 absolute bottom-0 -z-30 bg-primary_yellow opacity-40'></div>
+            <div className="card py-20 glass">
+              <ReactSVG src={icons.clock} className='w-50 top-1/2 -translate-y-1/2 absolute -z-10 opacity-50'/>
+              <div className="card-body w-full text-center">
+                <h2 className="text-2xl font-bold">Records</h2>
+                <p>You can find exercises performed</p>
+              </div>
+              <div className="card-actions justify-center">
+                <NavLink to='/records' className="btn btn-secondary text-dark-darker text-xl">Check out</NavLink>
+              </div>
+            </div>
           </div>
-          }
-      </div>
+          <div className="relative w-fit mx-auto rounded-3xl overflow-hidden">
+            <div className='w-full h-1/3 absolute bottom-0 -z-30 bg-primary_yellow opacity-40'></div>
+            <div className="card py-20 glass">
+              <ReactSVG src={icons.calendar} className='w-50 top-1/2 -translate-y-1/2 absolute -z-10 opacity-50'/>
+              <div className="card-body w-full text-center">
+                <h2 className="text-2xl font-bold">Appointments</h2>
+                <p>You can find therapy appointments</p>
+              </div>
+              <div className="card-actions justify-center">
+                <NavLink to='/appointments' className="btn btn-secondary text-dark-darker text-xl">Check out</NavLink>
+              </div>
+            </div>
+          </div>
+
     </div>
   </>
   )

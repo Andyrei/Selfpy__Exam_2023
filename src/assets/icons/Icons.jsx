@@ -9,6 +9,9 @@ import plus from './plusIcon.svg'
 import minus from './minusIcon.svg'
 import menu from './menuIcon.svg'
 import close from './closeIcon.svg'
+import load from './loadIcon.svg'
+import clock from './clockIcon.svg'
+import calendar from './calendarIcon.svg'
 
 export default {
     user,
@@ -22,4 +25,7 @@ export default {
     minus,
     menu,
     close,
+    load,
+    clock,
+    calendar
 }
