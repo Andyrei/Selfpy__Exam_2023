@@ -33,6 +33,7 @@ export default function AbcSchema() {
   },[])
   
 
+  /* POST EXERCISE */
   const [loaderPost, setLoaderPost] = useState(false)
   const [serverMessage, setServerMessage] = useState()
   const postExercises = async (data)=>{

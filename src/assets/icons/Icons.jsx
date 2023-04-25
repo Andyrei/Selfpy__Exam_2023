@@ -12,6 +12,7 @@ import close from './closeIcon.svg'
 import load from './loadIcon.svg'
 import clock from './clockIcon.svg'
 import calendar from './calendarIcon.svg'
+import back from './backIcon.svg'
 
 export default {
     user,
@@ -27,5 +28,6 @@ export default {
     close,
     load,
     clock,
-    calendar
+    calendar,
+    back
 }

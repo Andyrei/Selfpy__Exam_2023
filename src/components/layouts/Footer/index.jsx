@@ -26,7 +26,6 @@ const {setIsLoading, LoadingElement} = useLoading()
     }
   }
   useEffect(()=>{
-    console.log('component mounted')
     fetchNav()
   },[])
   

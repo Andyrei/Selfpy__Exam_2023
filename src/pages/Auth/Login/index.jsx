@@ -36,7 +36,7 @@ export default function Login() {
         </div>
         <div className="input-wrapper">
           <div className={`input-container ${errors.password && "invalid"}`}>
-            <input placeholder=' ' {...register('password', {required:{value: true, message: 'Password is required'}})} />
+            <input type='password'  autoComplete="on" placeholder=' ' {...register('password', {required:{value: true, message: 'Password is required'}})} />
             <label className='input-label'> password </label>
           </div>
             {errors.password && <span className='error-text'>{errors.password.message}</span>}

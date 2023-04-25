@@ -3,6 +3,7 @@ import Login from './Auth/Login'
 import Register from './Auth/Register'
 import Statistics from './Statistics'
 import Dashboard from './Dashboard'
+import ModifyUser from './Dashboard/ModifyUser'
 import Exercises from './Exercises'
 import AbcSchema from './Exercises/pages/AbcSchema'
 import MoodTrack from './Exercises/pages/MoodTrack'
@@ -15,6 +16,7 @@ export default  {
   Statistics,
   Exercises,
   Dashboard,
+  ModifyUser,
   AbcSchema,
   MoodTrack,
   Gratefulness

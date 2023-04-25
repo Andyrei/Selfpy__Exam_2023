@@ -4,15 +4,18 @@ import useLoading from '../../../hooks/useLoading';
 
 export default function Motivational() {
   const [ motivational, setMotivational ] = useState();
+  const [ img, setImg  ] = useState();
   const {setIsLoading, LoadingElement} = useLoading()
-
+  const API_KEY = import.meta.env.VITE_API_NINJA_KEY
+  
+  
   async function getQuote()
   {
     setIsLoading(true)
     await fetch("https://api.api-ninjas.com/v1/quotes?category=happiness",{
       method: 'get',
       headers: {
-        'X-Api-Key': 'mXZQT7LdG74IHwCHGmiakQ==0hysFn0bQFXuCSjO'
+        'X-Api-Key': API_KEY
       }
     })
     .then(function(response) {
@@ -27,8 +30,29 @@ export default function Motivational() {
     })
   }
 
+  /* NOT WORKING REQUEST FULFILLED BUT NO URL SUGGESTION: imageBase64  */
+  async function getImg(){
+    setIsLoading(true)
+    await fetch("https://api.api-ninjas.com/v1/randomimage?category=nature",{
+      method: 'get',
+      headers: {
+        'X-Api-Key': API_KEY,
+        'Accept': 'image/jpg'
+      }
+    })
+    .then(result=>{
+      if(result.status) return result.blob()
+    }).then(data => setImg(URL.createObjectURL(data)))
+
+    .catch((er)=>{
+      console.log(er) 
+      setIsLoading(false)
+    })
+  }
+
   useEffect(()=>{
-    getQuote();
+    /* getQuote(); */
+/*     getImg(); */
   },[])
 
   return (
