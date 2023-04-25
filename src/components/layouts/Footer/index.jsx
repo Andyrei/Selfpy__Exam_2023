@@ -11,31 +11,25 @@ export default function Footer() {
   const {register, watch} = useForm()
 
   const [navs, setNavs ]= useState()
-const {setIsLoading, LoadingElement} = useLoading()
 
   const fetchNav = async() => {
-    setIsLoading(true)
     try {
       const response = await axios.get('/exercises')
       const navLinks =response.data
       if(navLinks) setNavs(navLinks)
-      setIsLoading(false)
     }catch(err){
       console.log(err)
-      setIsLoading(false)
     }
   }
   useEffect(()=>{
+    console.log('component mounted')
     fetchNav()
   },[])
   
   
-  navs && navs.map(v=>{
-      
-  })
+
   return (
     <>
-    <LoadingElement>
       {/* MOBILE MENU /W FAB ONLY ON AUTH */}
       <div className="navbar-bottom-container md:hidden">
           <div className="navbar-bottom-tabs">
@@ -72,7 +66,6 @@ const {setIsLoading, LoadingElement} = useLoading()
             </div>
           </div>
         </div>
-      </LoadingElement>
   </>
   )
 }

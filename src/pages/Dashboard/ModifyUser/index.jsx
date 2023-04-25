@@ -6,14 +6,49 @@ import { useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
 
 export default function ModifyUser() {
-  const { userData, emailPattern } = useAuthContext()
-  const {register, handleSubmit, control, reset, watch, formState: {errors, touchedFields} } = useForm();
-  useEffect(()=>{
-    console.log(userData.user)
-    reset(userData.user)
-  },[])
-  const onSubmit = ()=>{
+  const { userData, emailPattern, fetcher } = useAuthContext()
+  const {register, setValue, handleSubmit, control, watch, reset, formState: {errors, isDirty} } = useForm();
 
+  const modifyUser = async(id, data)=>{
+    console.log("SENDING DATA")
+    await fetcher(`/user/update-profile/${id}`,{
+        method: "PATCH",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        redirect: 'follow'
+      })
+      .then(res => {return res.json()})
+      .then(data => {
+        if(data){
+          console.log("data received", data)
+        }
+      })
+      .catch(error => console.log('error', error));
+  }
+  const {user} = userData
+
+  /* GET USER AND ADD ITTO CURRENT BECAUSE THE user VAR HAS id 
+    AND OTHER FIELDS THAT WON'T BE SENT TO DB
+  */
+  const currentUser = {
+    description: user?.description,
+    username: user?.username,
+    name: user?.name,
+    surname: user?.surname
+  }
+
+  useEffect(()=>{
+    reset(currentUser)
+  },[userData])
+
+  
+  // console.log(userData?.user?.id)
+
+  const onSubmit = (formData)=>{
+    modifyUser(user?.id, formData)
   }
   return (
     <>
@@ -32,6 +67,23 @@ export default function ModifyUser() {
       </section>
       <section className="form-container">
         <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
+          {/* Description */}
+          <div className="input-wrapper">
+            <label className=''> Description </label>
+            <div className={errors.description ? 'input-container invalid' : 'input-container'}>
+              <textarea placeholder='Add a description' className='w-full p-3 resize-none' 
+                { ...register('description',
+                  {
+                    maxLength: {
+                      value: 100,
+                      message: "Should contain at least 5 characters"
+                    }
+                  }
+                  )}></textarea>
+                  <span className={`text-sm font-semibold ${watch('description')?.length > 100 && 'text-accentPrimary'}`}>{ watch('description') ? watch('description').length : '0' } / 100 max</span>
+            </div>
+            <FieldError errors={errors} field="description" />
+          </div>
           {/* Username */}
           <div className="input-wrapper">
             <div className={errors.username ? 'input-container invalid' : 'input-container'}>
@@ -55,7 +107,7 @@ export default function ModifyUser() {
               <label className='input-label'> username </label>
             </div>
             <FieldError errors={errors} field="username" />
-            </div>
+          </div>
           {/* Name */}
           <div className="input-wrapper">
             <div className={errors.name ? 'input-container invalid' : 'input-container'}>
@@ -84,49 +136,15 @@ export default function ModifyUser() {
           </div>
           {/* Mail */}
           <div className="input-wrapper">
-            <div className={errors.email ? 'input-container invalid' : 'input-container'}>
-              <input placeholder=' ' {
-                ...register('email',
-                  {required: {
-                    value: true,
-                    message: 'Email is required',
-                  },
-                    pattern: {
-                      value: emailPattern,
-                      message: 'Email is not correct'
-                    }
-                  })} />
-              <label className='input-label'> email </label>
+            <div className='input-container '>
+              <label className='input-label'> Email: {user?.email} </label>
             </div>
-            <FieldError errors={errors} field="email" />
           </div>
-          {/* Password */}
-          <div className="input-wrapper">
-            <div className={errors.password? 'invalid input-container' : 'input-container'}>
-              <input placeholder=' ' {...register('password',
-                  {
-                    required:{value: true, message: 'Password is required'}
-                  }
-                )} />
-              <label className='input-label'> password </label>
-            </div>
-            <FieldError errors={errors} field="password" />
-          </div>
-        
-          {/* repeat Password */}
-          {watch('password') && touchedFields.password &&
-              <div className="input-wrapper">
-                <div className={errors.password_confirmation ? 'invalid input-container' : 'input-container'}>
-                  <input placeholder=' ' {...register('password_confirmation', {required:{value: true, message: 'Password confirmation is required'}})} />
-                  <label className='input-label'> repeat password </label>
-                </div>
-                <FieldError errors={errors} field="password_confirmation" />
-              </div>
-          }
           {/* SUBMIT */}
-          <div className="w-full">
-            <input type="submit" className='btn block w-full' value="Register"/>
-          </div>
+          {isDirty&&<div className="w-full">
+            <input type="submit" className='btn block w-full' value="Modify"/>
+          </div>}
+          
         </form>
       </section>
     </>

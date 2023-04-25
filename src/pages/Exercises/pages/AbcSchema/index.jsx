@@ -14,6 +14,7 @@ export default function AbcSchema() {
   const [exercise, setExercise] = useState()
   const {setIsLoading, LoadingElement} = useLoading()
   const [postExercise, setPostExercise] = useState()
+  
   const {fetcher} = useAuthContext()
 
   const fetchExercise = async()=>{
@@ -38,7 +39,6 @@ export default function AbcSchema() {
   const [serverMessage, setServerMessage] = useState()
   const postExercises = async (data)=>{
     setLoaderPost(true)
-    console.log('fetch started')
     await fetcher('/userexercises/create',{
         method: "POST",
         headers: {
