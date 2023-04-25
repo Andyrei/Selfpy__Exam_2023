@@ -10,21 +10,30 @@ export const USER_API= import.meta.env.VITE_USER_API;
 export const REGISTER_API= import.meta.env.VITE_REGISTER_API;
 export const LOGIN_API= import.meta.env.VITE_LOGIN_API;
 export const BASE_URL= import.meta.env.VITE_BASE_URL;
-export const AUTH_TOKEN = ''
 
-function useAuth (){
-  const {userData} = useAuthContext()
-    return(
-      userData.token ? AUTH_TOKEN = `Bearer ${userData.token}` : ''
-    )
-}
-export default axios.create({
-  baseURL: BASE_URL
+// Create instance called instance
+const instance = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+      'content-type':'application/json',
+  },
 });
-
-axios.defaults.headers.post['Authorization'] = AUTH_TOKEN;
-axios.defaults.headers.common['Content-Type'] = 'application/json';
-
-
+export default {
+  get: (url) =>
+  instance({
+      'method':'GET',
+      'url':url
+  }),
+  /* post: (url, token, data) =>
+  instance({
+      'method': 'POST',
+      'url':url,
+      'headers': {
+        "Accept": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      'data': data
+  }) */
+}
 
 
