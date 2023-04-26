@@ -34,7 +34,7 @@ export default function Footer() {
       <div className="navbar-bottom-container md:hidden">
           <div className="navbar-bottom-tabs">
             <div className="navbar-tab navbar-tab-left">
-                <NavLink className='w-1/4' to='/statistics'><ReactSVG className='' src={ icons.pieChart } /></NavLink>
+                <NavLink className='w-1/4' to='/records'><ReactSVG className='' src={ icons.pieChart } /></NavLink>
             </div>
             <div className="navbar-tab navbar-tab-center relative">
             {navs && (

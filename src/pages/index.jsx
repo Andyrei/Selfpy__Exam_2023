@@ -1,7 +1,7 @@
 import Auth from './Auth'
 import Login from './Auth/Login'
 import Register from './Auth/Register'
-import Statistics from './Statistics'
+import Records from './Records'
 import Dashboard from './Dashboard'
 import ModifyUser from './Dashboard/ModifyUser'
 import Exercises from './Exercises'
@@ -13,7 +13,7 @@ export default  {
   Auth,
   Login,
   Register,
-  Statistics,
+  Records,
   Exercises,
   Dashboard,
   ModifyUser,

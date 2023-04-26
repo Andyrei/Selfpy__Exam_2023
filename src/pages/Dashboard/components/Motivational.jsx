@@ -22,8 +22,10 @@ export default function Motivational() {
       return response.json();
     })
     .then(function(data) {
+      
       setMotivational(data)
       setIsLoading(false)
+
     }).catch((er)=>{
       console.log(er) 
       setIsLoading(false)
@@ -51,7 +53,7 @@ export default function Motivational() {
   }
 
   useEffect(()=>{
-    /* getQuote(); */
+    getQuote();
 /*     getImg(); */
   },[])
 

@@ -32,7 +32,8 @@ function App() {
               <Route path='mood_track' element={<PrivateRoute><pages.MoodTrack /></PrivateRoute>}/>
               <Route path='gratefulness' element={<PrivateRoute><pages.Gratefulness /></PrivateRoute>}/>
             </Route>
-            <Route path="/statistics" element={<PrivateRoute><pages.Statistics /></PrivateRoute>} />
+            <Route path="/records" element={<PrivateRoute><pages.Records /></PrivateRoute>} />
+            <Route path="/appointments" element={<PrivateRoute><pages.Records /></PrivateRoute>} />
           
           
           </Routes>

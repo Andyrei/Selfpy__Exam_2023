@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
 
 export default function ModifyUser() {
-  const { userData, emailPattern, fetcher } = useAuthContext()
-  const {register, setValue, handleSubmit, control, watch, reset, formState: {errors, isDirty} } = useForm();
+  const { userData, fetcher } = useAuthContext()
+  const {register, handleSubmit, control, watch, reset, formState: {errors, isDirty} } = useForm();
 
   const modifyUser = async(id, data)=>{
     console.log("SENDING DATA")
@@ -28,28 +28,26 @@ export default function ModifyUser() {
       })
       .catch(error => console.log('error', error));
   }
-  const {user} = userData
+  const { user } = userData
 
-  /* GET USER AND ADD ITTO CURRENT BECAUSE THE user VAR HAS id 
+  /* 
+    GET USER AND ADD ITTO CURRENT BECAUSE THE user VAR HAS id 
     AND OTHER FIELDS THAT WON'T BE SENT TO DB
   */
-  const currentUser = {
-    description: user?.description,
-    username: user?.username,
-    name: user?.name,
-    surname: user?.surname
-  }
 
   useEffect(()=>{
-    reset(currentUser)
+    reset({
+      description: user?.description,
+      username: user?.username,
+      name: user?.name,
+      surname: user?.surname
+    })
   },[userData])
-
-  
-  // console.log(userData?.user?.id)
 
   const onSubmit = (formData)=>{
     modifyUser(user?.id, formData)
   }
+
   return (
     <>
       <DevTool control={control}/>
