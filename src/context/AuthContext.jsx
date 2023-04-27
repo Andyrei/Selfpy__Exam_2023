@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
 // END COOKIE
 
 // GET USER
-const getUserToken = async() => {
+const getUserToken = (setPageLoading) => {
   if (cookies["auth_token"]) {
     fetcher(USER_API, {
       method: 'GET',

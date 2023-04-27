@@ -5,25 +5,23 @@ import useAuthContext from '../../../../context/AuthContext';
 import caller from '../../../../api/fetcher';
 import useLoading from '../../../../hooks/useLoading';
 import { useForm } from 'react-hook-form';
-import { DevTool } from "@hookform/devtools";
+import { Blocks } from  'react-loader-spinner'
 
   
 export default function AbcSchema() {
 
-/* FETCH THE EXERCISE DATA */
   const [exercise, setExercise] = useState()
-  const {setIsLoading, LoadingElement} = useLoading()
-  
+  const [pageLoading, setPageLoading ] = useState(true)
   const {fetcher} = useAuthContext()
 
   const fetchExercise = async()=>{
-    setIsLoading(true)
+    setPageLoading(true)
     await caller.get('/exercises/1')
     .then((res)=>{
       if(res.status) {
         setPostExercise(res.data)
         JSON.parse(res.data.data).map(e=>{return setExercise(e)})
-        setIsLoading(false)
+        setPageLoading(false)
       }
     })
 
@@ -60,7 +58,7 @@ const postExercises = (storeData)=>{
 
 
 /* WORK WITH ITS DATA */
-  const {register, handleSubmit, control, formState: {errors}} = useForm()
+  const {register, handleSubmit, formState: {errors}} = useForm()
   const [currentTab, setCurrentTab] = useState(0);
 
   const handleTabClick = (e) => {
@@ -75,8 +73,21 @@ const postExercises = (storeData)=>{
       
   }
 
+  // if has no data wait loading
+  if(pageLoading) return <div className="grid w-full h-screen place-content-center">
+    <Blocks
+      visible={true}
+      height="80"
+      width="80"
+      ariaLabel="blocks-loading"
+      wrapperStyle={{}}
+      wrapperClass="blocks-wrapper"
+    />
+  </div>
+
+
   return (
-    <LoadingElement >
+    <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="relative">
           <h1 className='text-3xl text-center underline underline-offset-8 mb-10'> {exercise?.title} </h1>
@@ -85,7 +96,7 @@ const postExercises = (storeData)=>{
                   return <button
                             key={k}
                             id={k}
-                            className={`tab uppercase font-semibold text-md ${currentTab == k ? 'tab-active' : ''}`}
+                            className={`tab uppercase font-semibold text-lg ${currentTab == k ? 'tab-active' : ''}`}
                             onClick={(handleTabClick)}
                             >
                           { v.label }
@@ -96,21 +107,20 @@ const postExercises = (storeData)=>{
           <div className="content_tab">
 
               {exercise && exercise.its_data.map((v, k)=>{
-                    return <SingleExercise key={Math.random()} idX={k} currentTab={currentTab} info={v.info} label={v.label} register={register} errors={errors}/>
+                    return <SingleExercise key={k} idX={k} currentTab={currentTab} info={v.info} label={v.label} register={register} errors={errors}/>
                 })
               }
 
           </div>
         </div>
-          <div className='w-fu'>
-              <button type="submit" className='btn mx-auto block flex gap-8'>
+          <div className='w-full px-20 mb-15'>
+              <button type="submit" className='btn btn-outline block w-full text-xl'>
                 {loaderPost && <span><ReactSVG src={icons.load} className='w-5'/></span>}
                 Finish exercise
               </button>
           </div>
       </form>
-      <DevTool control={control} />
-    </LoadingElement>
+    </>
   );
 
 }

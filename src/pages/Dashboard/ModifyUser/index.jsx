@@ -10,7 +10,6 @@ export default function ModifyUser() {
   const {register, handleSubmit, control, watch, reset, formState: {errors, isDirty} } = useForm();
 
   const modifyUser = async(id, data)=>{
-    console.log("SENDING DATA")
     await fetcher(`/user/update-profile/${id}`,{
         method: "PATCH",
         headers: {

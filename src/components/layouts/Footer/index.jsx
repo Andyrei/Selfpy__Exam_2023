@@ -31,7 +31,7 @@ export default function Footer() {
   return (
     <>
       {/* MOBILE MENU /W FAB ONLY ON AUTH */}
-      <div className="navbar-bottom-container md:hidden">
+      <div className="navbar-bottom-container bg-dark">
           <div className="navbar-bottom-tabs">
             <div className="navbar-tab navbar-tab-left">
                 <NavLink className='w-1/4' to='/records'><ReactSVG className='' src={ icons.pieChart } /></NavLink>

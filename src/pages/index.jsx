@@ -2,6 +2,7 @@ import Auth from './Auth'
 import Login from './Auth/Login'
 import Register from './Auth/Register'
 import Records from './Records'
+import Appointments from './Appointments'
 import Dashboard from './Dashboard'
 import ModifyUser from './Dashboard/ModifyUser'
 import Exercises from './Exercises'
@@ -19,5 +20,6 @@ export default  {
   ModifyUser,
   AbcSchema,
   MoodTrack,
-  Gratefulness
+  Gratefulness,
+  Appointments
 }
