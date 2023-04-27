@@ -12,7 +12,7 @@ export default function AbcSchema() {
 
   const [exercise, setExercise] = useState()
   const [pageLoading, setPageLoading ] = useState(true)
-  const {fetcher} = useAuthContext()
+  const {fetcher, navigate} = useAuthContext()
 
   const fetchExercise = async()=>{
     setPageLoading(true)
@@ -70,6 +70,7 @@ const postExercises = (storeData)=>{
       exercise_id: postExercise.id,
       data: JSON.stringify(dataForm)
     })
+    navigate('/records')
       
   }
 
